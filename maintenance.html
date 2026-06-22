@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8fafc" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="Website sedang dalam proses pemeliharaan oleh Velocity Developer."
+    />
+    <title>Website Dalam Pemeliharaan - Velocity Developer</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        overflow-x: hidden;
+        padding: 48px 24px;
+        color: #1f2937;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+          BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at 15% 10%, rgba(174, 254, 34, 0.1), transparent 30%),
+          radial-gradient(circle at 85% 25%, rgba(11, 133, 173, 0.12), transparent 34%),
+          linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+      }
+
+      .maintenance {
+        width: 100%;
+        max-width: 720px;
+        padding: 24px 32px;
+        text-align: center;
+        animation: reveal 0.8s ease-out both;
+      }
+
+      .scene {
+        width: min(48vw, 220px);
+        margin-inline: auto;
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+      }
+
+      .logo {
+        width: 82%;
+        overflow: visible;
+        filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.32));
+        animation: float 4s ease-in-out 1.5s infinite;
+      }
+
+      .ring-outer,
+      .ring-inner,
+      .bolt-shadow,
+      .bolt-main {
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      .ring-inner {
+        animation: inner-cycle 2.7s ease-in-out infinite;
+      }
+
+      .ring-outer {
+        animation: outer-cycle 2.7s ease-in-out infinite;
+      }
+
+      .bolt-shadow,
+      .bolt-main {
+        transform-origin: center bottom;
+      }
+
+      .bolt-shadow {
+        animation: shadow-cycle 2.7s linear infinite;
+      }
+
+      .bolt-main {
+        animation: main-cycle 2.7s linear infinite;
+      }
+
+      .speed-line {
+        fill: none;
+        stroke: #aefe22;
+        stroke-width: 1.15;
+        stroke-linecap: round;
+        stroke-dasharray: 18;
+        stroke-dashoffset: 18;
+        opacity: 0;
+        animation: speed-trail 2.7s linear infinite;
+      }
+
+      .speed-line.second { animation-delay: 0.1s; }
+      .speed-line.third { animation-delay: 0.16s; }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 20px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        color: #06759f;
+        background: rgba(11, 133, 173, 0.09);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #75d52d;
+        box-shadow: 0 0 0 5px rgba(117, 213, 45, 0.15);
+        animation: pulse 1.8s ease-in-out infinite;
+      }
+
+      h1 {
+        margin-bottom: 16px;
+        color: #111827;
+        font-size: clamp(2rem, 5vw, 3rem);
+        line-height: 1.18;
+        font-weight: 750;
+        letter-spacing: -0.035em;
+      }
+
+      .lead {
+        max-width: 610px;
+        margin: 0 auto;
+        color: #4b5563;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      .notice {
+        margin: 28px 0;
+        padding: 20px;
+        border-radius: 14px;
+        color: #374151;
+        background: rgba(255, 255, 255, 0.65);
+        box-shadow: 0 14px 40px rgba(15, 23, 42, 0.07);
+        backdrop-filter: blur(12px);
+        font-size: 15px;
+        line-height: 1.65;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .notice:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 48px rgba(15, 23, 42, 0.11);
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 13px 22px;
+        border: 1px solid #111827;
+        border-radius: 999px;
+        color: #fff;
+        background: #111827;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease,
+          background-color 0.25s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-3px);
+        background: #374151;
+        box-shadow: 0 12px 28px rgba(17, 24, 39, 0.2);
+      }
+
+      .button.secondary {
+        color: #111827;
+        border-color: #d1d5db;
+        background: #fff;
+      }
+
+      .button.secondary:hover {
+        border-color: #06759f;
+        box-shadow: 0 12px 28px rgba(11, 133, 173, 0.12);
+      }
+
+      .button:focus-visible {
+        outline: 3px solid rgba(11, 133, 173, 0.28);
+        outline-offset: 4px;
+      }
+
+      footer {
+        margin-top: 30px;
+        color: #6b7280;
+        font-size: 13px;
+      }
+
+      @keyframes reveal {
+        from { opacity: 0; transform: translateY(18px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes pulse {
+        50% { transform: scale(1.2); box-shadow: 0 0 0 8px rgba(117, 213, 45, 0.08); }
+      }
+
+      @keyframes inner-cycle {
+        0% { opacity: 0; transform: scale(0.3) rotate(-35deg); }
+        10% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+        14%, 91% { opacity: 1; transform: scale(1); }
+        98%, 100% { opacity: 0; transform: scale(0.85); }
+      }
+
+      @keyframes outer-cycle {
+        0%, 11% { opacity: 0; transform: scale(0.3) rotate(-35deg); }
+        21% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+        25%, 91% { opacity: 1; transform: scale(1); }
+        98%, 100% { opacity: 0; transform: scale(0.85); }
+      }
+
+      @keyframes shadow-cycle {
+        0%, 27% { opacity: 0; transform: translate(72px, -88px) scale(0.38, 0.72); }
+        33% { opacity: 1; transform: translate(-2px, 3px) scale(1.03); }
+        36%, 88% { opacity: 1; transform: translate(0) scale(1); }
+        98%, 100% { opacity: 0; transform: translate(-65px, 76px) scale(0.82); }
+      }
+
+      @keyframes main-cycle {
+        0%, 30% { opacity: 0; transform: translate(72px, -88px) scale(0.38, 0.72); }
+        36% { opacity: 1; transform: translate(-2px, 3px) scale(1.03); filter: drop-shadow(0 0 9px rgba(190, 255, 32, 0.95)); }
+        39%, 90% { opacity: 1; transform: translate(0) scale(1); filter: none; }
+        98%, 100% { opacity: 0; transform: translate(-65px, 76px) scale(0.82); }
+      }
+
+      @keyframes speed-trail {
+        0%, 25% { opacity: 0; stroke-dashoffset: 18; }
+        29% { opacity: 0.9; }
+        36%, 100% { opacity: 0; stroke-dashoffset: -18; }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-9px); }
+      }
+
+      @media (max-width: 600px) {
+        body { padding: 16px; }
+        .maintenance { padding: 20px 8px; }
+        .lead { font-size: 15px; }
+        .button { width: 100%; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="maintenance">
+      <div class="scene">
+        <svg class="logo" viewBox="0 0 93.300247 107.21929" role="img" aria-labelledby="logo-title">
+          <title id="logo-title">Logo Velocity Developer</title>
+          <defs>
+            <linearGradient id="blue" x1="82" y1="75" x2="113" y2="146" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#0b85ad" /><stop offset=".45" stop-color="#04759f" /><stop offset="1" stop-color="#061c42" />
+            </linearGradient>
+            <linearGradient id="green" x1="120" y1="70" x2="76" y2="140" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#008c08" /><stop offset="1" stop-color="#0b8f00" />
+            </linearGradient>
+            <linearGradient id="lime" x1="126" y1="52" x2="78" y2="140" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#c9ff19" /><stop offset=".48" stop-color="#adff1d" /><stop offset="1" stop-color="#59cf2e" />
+            </linearGradient>
+          </defs>
+          <g transform="translate(-49.06732 -47.742905)">
+            <path class="ring-outer" fill="url(#blue)" d="M95.7177 61.661952a46.65 46.65 0 1 0 0 93.300248 46.65 46.65 0 0 0 0-93.300248Zm0 10.20041a37.05 36.45 0 1 1 0 72.899938 37.05 36.45 0 0 1 0-72.899938Z" />
+            <path class="ring-inner" fill="url(#blue)" d="M84.317601 93.352764a27.55924 27.55924 0 1 0 0 55.118626 27.55924 27.55924 0 0 0 0-55.118626Zm0 6.026046a21.887887 21.533426 0 1 1 0 43.06683 21.887887 21.533426 0 0 1 0-43.06683Z" />
+            <path class="speed-line" d="m151 39-21 24" />
+            <path class="speed-line second" d="m157 53-18 20" />
+            <path class="speed-line third" d="m143 34-15 17" />
+            <path class="bolt-shadow" fill="url(#green)" d="m102.0894 70.232492 39.6875-.52917-66.93958 70.643748Z" />
+            <path class="bolt-main" fill="url(#lime)" d="m98.64982 56.209572 34.39583-8.466667-58.20833 92.604165Z" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="status"><span class="status-dot"></span>Maintenance berlangsung</div>
+      <h1>Kami Sedang Melakukan Pemeliharaan</h1>
+      <p class="lead">
+        Website sedang kami tingkatkan agar lebih cepat, aman, dan nyaman digunakan.
+        Silakan kembali beberapa saat lagi.
+      </p>
+
+      <div class="notice">
+        Terima kasih atas kesabaran Anda. Jika membutuhkan bantuan segera,
+        tim <strong>Velocity Developer</strong> tetap dapat dihubungi melalui WhatsApp.
+      </div>
+
+      <div class="actions">
+        <button class="button" type="button" onclick="window.location.reload()">Coba Lagi</button>
+        <a class="button secondary" href="https://wa.me/6285820009957" target="_blank" rel="noopener">Hubungi Kami</a>
+      </div>
+
+      <footer>© Velocity Developer. Kami akan segera kembali.</footer>
+    </main>
+  </body>
+</html>
