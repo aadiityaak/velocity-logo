@@ -7,7 +7,6 @@
   <title>VD Logo Animation</title>
   <style>
     :root {
-      --cyan: #10a7d4;
     }
 
     * { box-sizing: border-box; }
@@ -48,52 +47,61 @@
 
     .ring-outer {
       opacity: 0;
-      animation: ring-in .9s cubic-bezier(.16, 1, .3, 1) .15s forwards;
+      animation: ring-in .48s cubic-bezier(.16, 1, .3, 1) .48s forwards;
     }
 
     .ring-inner {
       opacity: 0;
-      animation: ring-in .8s cubic-bezier(.16, 1, .3, 1) .55s forwards;
+      animation: ring-in .42s cubic-bezier(.16, 1, .3, 1) .08s forwards;
     }
 
     .bolt-shadow {
       opacity: 0;
-      animation: bolt-in .7s cubic-bezier(.2, 1.35, .45, 1) 1s forwards;
+      animation: bolt-strike .22s cubic-bezier(.05, .75, .18, 1) 1.08s forwards;
     }
 
     .bolt-main {
       opacity: 0;
-      animation: bolt-in .7s cubic-bezier(.2, 1.35, .45, 1) 1.12s forwards,
-                 flash 3.2s ease-in-out 2s infinite;
+      animation: bolt-strike .2s cubic-bezier(.05, .75, .18, 1) 1.19s forwards,
+                 flash 3.2s ease-in-out 1.7s infinite;
     }
 
-    .energy-ring {
+    .speed-line {
       fill: none;
-      stroke: var(--cyan);
-      stroke-width: 1.2;
+      stroke: #aefe22;
+      stroke-width: 1.15;
+      stroke-linecap: round;
+      stroke-dasharray: 18;
+      stroke-dashoffset: 18;
       opacity: 0;
-      transform-origin: center;
-      animation: pulse 3s ease-out 1.5s infinite;
+      animation: speed-trail .3s ease-out 1.01s forwards;
+    }
+
+    .speed-line.second {
+      animation-delay: 1.1s;
     }
 
     @keyframes ring-in {
-      0% { opacity: 0; transform: scale(.45) rotate(-80deg); }
+      0% { opacity: 0; transform: scale(.3) rotate(-35deg); }
+      72% { opacity: 1; transform: scale(1.08) rotate(2deg); }
       100% { opacity: 1; transform: scale(1) rotate(0); }
     }
 
-    @keyframes bolt-in {
-      0% { opacity: 0; transform: translate(28px, -38px) scale(.55); }
+    @keyframes bolt-strike {
+      0% { opacity: 0; transform: translate(72px, -88px) scale(.72); }
+      72% { opacity: 1; transform: translate(-2px, 3px) scale(1.03); }
       100% { opacity: 1; transform: translate(0) scale(1); }
+    }
+
+    @keyframes speed-trail {
+      0% { opacity: 0; stroke-dashoffset: 18; }
+      30% { opacity: .9; }
+      100% { opacity: 0; stroke-dashoffset: -18; }
     }
 
     @keyframes flash {
       0%, 76%, 100% { filter: drop-shadow(0 0 0 transparent); }
       85% { filter: drop-shadow(0 0 9px rgba(190, 255, 32, .95)); }
-    }
-
-    @keyframes pulse {
-      0% { opacity: .7; transform: scale(.72); stroke-width: 1.4; }
-      65%, 100% { opacity: 0; transform: scale(1.12); stroke-width: .2; }
     }
 
     @keyframes float {
@@ -122,9 +130,10 @@
         </linearGradient>
       </defs>
       <g transform="translate(-49.06732 -47.742905)">
-        <circle class="energy-ring" cx="95.7177" cy="108.3123" r="45"/>
         <path class="ring-outer" fill="url(#blue)" d="M95.7177 61.661952a46.65 46.65 0 1 0 0 93.300248 46.65 46.65 0 0 0 0-93.300248Zm0 10.20041a37.05 36.45 0 1 1 0 72.899938 37.05 36.45 0 0 1 0-72.899938Z"/>
         <path class="ring-inner" fill="url(#blue)" d="M84.317601 93.352764a27.55924 27.55924 0 1 0 0 55.118626 27.55924 27.55924 0 0 0 0-55.118626Zm0 6.026046a21.887887 21.533426 0 1 1 0 43.06683 21.887887 21.533426 0 0 1 0-43.06683Z"/>
+        <path class="speed-line" d="m151 39-21 24"/>
+        <path class="speed-line second" d="m157 53-18 20"/>
         <path class="bolt-shadow" fill="url(#green)" d="m102.0894 70.232492 39.6875-.52917-66.93958 70.643748Z"/>
         <path class="bolt-main" fill="url(#lime)" d="m98.64982 56.209572 34.39583-8.466667-58.20833 92.604165Z"/>
       </g>
