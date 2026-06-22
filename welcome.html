@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Preview Demo Website - Velocity Developer</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="Website ini digunakan sebagai halaman preview demo untuk customer Velocity Developer."
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #ffffff;
+        color: #1f2937;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .demo-wrapper {
+        width: 100%;
+        max-width: 680px;
+        text-align: center;
+        padding: 48px 32px;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+      }
+
+      .badge {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        background: #f3f4f6;
+        color: #374151;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin-bottom: 16px;
+        color: #111827;
+        font-size: 34px;
+        line-height: 1.25;
+        font-weight: 700;
+      }
+
+      p {
+        color: #4b5563;
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 14px;
+      }
+
+      .info-box {
+        margin: 28px 0;
+        padding: 20px;
+        border-radius: 14px;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        text-align: left;
+      }
+
+      .info-box p {
+        margin-bottom: 8px;
+        font-size: 15px;
+        color: #374151;
+      }
+
+      .info-box p:last-child {
+        margin-bottom: 0;
+      }
+
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 13px 22px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.25s ease;
+      }
+
+      .btn-primary {
+        background: #111827;
+        color: #ffffff;
+        border: 1px solid #111827;
+      }
+
+      .btn-primary:hover {
+        background: #374151;
+        border-color: #374151;
+      }
+
+      .btn-outline {
+        background: #ffffff;
+        color: #111827;
+        border: 1px solid #d1d5db;
+      }
+
+      .btn-outline:hover {
+        background: #f9fafb;
+        border-color: #9ca3af;
+      }
+
+      .footer-text {
+        margin-top: 30px;
+        color: #6b7280;
+        font-size: 13px;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 16px;
+        }
+
+        .demo-wrapper {
+          padding: 36px 22px;
+          border-radius: 14px;
+        }
+
+        h1 {
+          font-size: 27px;
+        }
+
+        p {
+          font-size: 15px;
+        }
+
+        .btn {
+          width: 100%;
+        }
+      }
+
+      .scene {
+          position: relative;
+          width: min(48vw, 220px);
+          margin-inline: auto;
+          aspect-ratio: 1;
+          display: grid;
+          place-items: center;
+          isolation: isolate;
+        }
+
+        .logo {
+          width: 82%;
+          overflow: visible;
+          filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.42));
+          animation: float 4s ease-in-out 2s infinite;
+        }
+
+        .ring-outer,
+        .ring-inner,
+        .bolt-shadow,
+        .bolt-main {
+          transform-box: fill-box;
+          transform-origin: center;
+        }
+
+        .ring-outer {
+          opacity: 0;
+          animation: outer-cycle 3.6s ease-in-out infinite;
+        }
+
+        .ring-inner {
+          opacity: 0;
+          animation: inner-cycle 3.6s ease-in-out infinite;
+        }
+
+        .bolt-shadow {
+          opacity: 0;
+          animation: shadow-cycle 3.6s linear infinite;
+        }
+
+        .bolt-main {
+          opacity: 0;
+          animation: main-cycle 3.6s linear infinite;
+        }
+
+        .speed-line {
+          fill: none;
+          stroke: #aefe22;
+          stroke-width: 1.15;
+          stroke-linecap: round;
+          stroke-dasharray: 18;
+          stroke-dashoffset: 18;
+          opacity: 0;
+          animation: speed-trail 3.6s linear infinite;
+        }
+
+        .speed-line.second {
+          animation-delay: 0.1s;
+        }
+
+        @keyframes inner-cycle {
+          0% {
+            opacity: 0;
+            transform: scale(0.3) rotate(-35deg);
+          }
+          10% {
+            opacity: 1;
+            transform: scale(1.08) rotate(2deg);
+          }
+          14%,
+          84% {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+          }
+          91%,
+          100% {
+            opacity: 0;
+            transform: scale(0.85);
+          }
+        }
+
+        @keyframes outer-cycle {
+          0%,
+          11% {
+            opacity: 0;
+            transform: scale(0.3) rotate(-35deg);
+          }
+          21% {
+            opacity: 1;
+            transform: scale(1.08) rotate(2deg);
+          }
+          25%,
+          84% {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+          }
+          91%,
+          100% {
+            opacity: 0;
+            transform: scale(0.85);
+          }
+        }
+
+        @keyframes shadow-cycle {
+          0%,
+          27% {
+            opacity: 0;
+            transform: translate(72px, -88px) scale(0.72);
+          }
+          33% {
+            opacity: 1;
+            transform: translate(-2px, 3px) scale(1.03);
+          }
+          36%,
+          72% {
+            opacity: 1;
+            transform: translate(0) scale(1);
+          }
+          80%,
+          100% {
+            opacity: 0;
+            transform: translate(-65px, 76px) scale(0.82);
+          }
+        }
+
+        @keyframes main-cycle {
+          0%,
+          30% {
+            opacity: 0;
+            transform: translate(72px, -88px) scale(0.72);
+            filter: none;
+          }
+          36% {
+            opacity: 1;
+            transform: translate(-2px, 3px) scale(1.03);
+            filter: drop-shadow(0 0 9px rgba(190, 255, 32, 0.95));
+          }
+          39%,
+          75% {
+            opacity: 1;
+            transform: translate(0) scale(1);
+            filter: none;
+          }
+          83%,
+          100% {
+            opacity: 0;
+            transform: translate(-65px, 76px) scale(0.82);
+            filter: none;
+          }
+        }
+
+        @keyframes speed-trail {
+          0%,
+          25% {
+            opacity: 0;
+            stroke-dashoffset: 18;
+          }
+          29% {
+            opacity: 0.9;
+          }
+          36%,
+          100% {
+            opacity: 0;
+            stroke-dashoffset: -18;
+          }
+        }
+
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-9px);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+          }
+        }
+    </style>
+  </head>
+  <body>
+    <main class="demo-wrapper">
+      <div class="scene">
+        <svg
+          class="logo"
+          viewBox="0 0 93.300247 107.21929"
+          role="img"
+          aria-labelledby="logo-title"
+        >
+          <title id="logo-title">Logo VD</title>
+          <defs>
+            <linearGradient
+              id="blue"
+              x1="82"
+              y1="75"
+              x2="113"
+              y2="146"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#0b85ad" />
+              <stop offset=".45" stop-color="#04759f" />
+              <stop offset="1" stop-color="#061c42" />
+            </linearGradient>
+            <linearGradient
+              id="green"
+              x1="120"
+              y1="70"
+              x2="76"
+              y2="140"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#008c08" />
+              <stop offset="1" stop-color="#0b8f00" />
+            </linearGradient>
+            <linearGradient
+              id="lime"
+              x1="126"
+              y1="52"
+              x2="78"
+              y2="140"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#c9ff19" />
+              <stop offset=".48" stop-color="#adff1d" />
+              <stop offset="1" stop-color="#59cf2e" />
+            </linearGradient>
+          </defs>
+          <g transform="translate(-49.06732 -47.742905)">
+            <path
+              class="ring-outer"
+              fill="url(#blue)"
+              d="M95.7177 61.661952a46.65 46.65 0 1 0 0 93.300248 46.65 46.65 0 0 0 0-93.300248Zm0 10.20041a37.05 36.45 0 1 1 0 72.899938 37.05 36.45 0 0 1 0-72.899938Z"
+            />
+            <path
+              class="ring-inner"
+              fill="url(#blue)"
+              d="M84.317601 93.352764a27.55924 27.55924 0 1 0 0 55.118626 27.55924 27.55924 0 0 0 0-55.118626Zm0 6.026046a21.887887 21.533426 0 1 1 0 43.06683 21.887887 21.533426 0 0 1 0-43.06683Z"
+            />
+            <path class="speed-line" d="m151 39-21 24" />
+            <path class="speed-line second" d="m157 53-18 20" />
+            <path
+              class="bolt-shadow"
+              fill="url(#green)"
+              d="m102.0894 70.232492 39.6875-.52917-66.93958 70.643748Z"
+            />
+            <path
+              class="bolt-main"
+              fill="url(#lime)"
+              d="m98.64982 56.209572 34.39583-8.466667-58.20833 92.604165Z"
+            />
+          </g>
+        </svg>
+      </div>
+      <div class="badge">Preview Demo Website</div>
+
+      <h1>Website Ini Digunakan untuk Preview Demo</h1>
+
+      <p>
+        Website ini merupakan halaman preview yang digunakan oleh
+        <strong>Velocity Developer</strong> untuk menampilkan demo desain,
+        fitur, dan tampilan website kepada customer.
+      </p>
+
+      <p>
+        Konten, gambar, teks, dan fitur yang tampil pada website ini dapat
+        bersifat sementara sebelum website resmi dipublikasikan.
+      </p>
+
+      <div class="info-box">
+        <p><strong>Status:</strong> Website demo / preview customer</p>
+        <p><strong>Developer:</strong> Velocity Developer</p>
+        <p><strong>Website Resmi:</strong> velocitydeveloper.com</p>
+      </div>
+
+      <div class="btn-group">
+        <a
+          href="https://velocitydeveloper.com"
+          class="btn btn-primary"
+          target="_blank"
+          rel="noopener"
+        >
+          Kunjungi Website Resmi
+        </a>
+
+        <a
+          href="https://wa.me/6285820009957"
+          class="btn btn-outline"
+          target="_blank"
+          rel="noopener"
+        >
+          Hubungi Kami
+        </a>
+      </div>
+
+      <div class="footer-text">
+        © Velocity Developer. Halaman ini hanya digunakan untuk kebutuhan demo.
+      </div>
+    </main>
+  </body>
+</html>
