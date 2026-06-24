@@ -45,6 +45,7 @@
         overflow: hidden;
         pointer-events: none;
         z-index: 0;
+        perspective: 900px;
       }
 
       .bg-glow,
@@ -76,56 +77,32 @@
       }
 
       .bg-grid {
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(6, 28, 66, 0.1) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(6, 28, 66, 0.1) 1px, transparent 1px);
-        background-size: 56px 56px;
-        opacity: 0.48;
-        --grid-highlight-opacity: 0;
+        inset: -8%;
+        display: grid;
+        grid-template-columns: repeat(var(--tile-cols), 56px);
+        grid-auto-rows: 56px;
+        opacity: 0.54;
+        transform-style: preserve-3d;
       }
 
-      .bg-grid::before {
+      .bg-tile {
+        position: relative;
+        width: 56px;
+        height: 56px;
+        border-top: 1px solid rgba(6, 28, 66, 0.11);
+        border-left: 1px solid rgba(6, 28, 66, 0.11);
+        transform-style: preserve-3d;
+        will-change: transform, opacity, filter;
+      }
+
+      .bg-tile::before {
         content: "";
         position: absolute;
         inset: 0;
-        background-image:
-          linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.14) 0,
-            rgba(255, 255, 255, 0.08) 16px,
-            rgba(6, 28, 66, 0.02) 16px,
-            rgba(6, 28, 66, 0.02) 56px
-          ),
-          linear-gradient(
-            315deg,
-            rgba(6, 28, 66, 0.08) 0,
-            rgba(6, 28, 66, 0.04) 14px,
-            rgba(255, 255, 255, 0) 14px,
-            rgba(255, 255, 255, 0) 56px
-          );
-        background-size: 56px 56px;
-        opacity: 0.5;
-        mix-blend-mode: multiply;
-      }
-
-      .bg-grid::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(17, 24, 39, 0.42) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(17, 24, 39, 0.42) 1px, transparent 1px);
-        background-size: 56px 56px;
-        opacity: var(--grid-highlight-opacity);
-        filter: drop-shadow(0 0 4px rgba(17, 24, 39, 0.08));
-        mask-image: radial-gradient(
-          circle 168px at var(--grid-x, 50vw) var(--grid-y, 50vh),
-          rgba(0, 0, 0, 1) 0%,
-          rgba(0, 0, 0, 0.9) 40%,
-          transparent 100%
-        );
-        transition: opacity 0.25s ease;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 36%),
+          linear-gradient(315deg, rgba(6, 28, 66, 0.1), transparent 32%);
+        opacity: 0.45;
       }
 
       .demo-wrapper {
@@ -159,9 +136,10 @@
       }
 
       h1 {
+        margin-top: 24px;
         margin-bottom: 16px;
         color: #111827;
-        font-size: clamp(2rem, 5vw, 3rem);
+        font-size: clamp(2rem, 5vw, 2.5rem);
         line-height: 1.25;
         font-weight: 750;
         letter-spacing: -0.035em;
@@ -257,8 +235,6 @@
       .logo {
         width: 82%;
         overflow: visible;
-        filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.42));
-        transform-style: preserve-3d;
       }
 
       .ring-outer,
@@ -580,7 +556,7 @@
       </div>
       <div class="badge">Preview Demo Website</div>
 
-      <h1>Website Ini Digunakan untuk Preview Demo</h1>
+      <h1>Website Preview VelocityDeveloper.com</h1>
 
       <p>
         Website ini merupakan halaman preview yang digunakan oleh
@@ -654,14 +630,27 @@
 
         const bgGlow = document.querySelector(".bg-glow");
         const bgGrid = document.querySelector(".bg-grid");
+        const tileSize = 56;
+        let bgTiles = [];
+
+        const buildTiles = () => {
+          if (!bgGrid) return;
+          const cols = Math.ceil(window.innerWidth / tileSize) + 4;
+          const rows = Math.ceil(window.innerHeight / tileSize) + 4;
+          bgGrid.style.setProperty("--tile-cols", cols);
+          bgGrid.innerHTML = Array.from(
+            { length: cols * rows },
+            () => '<span class="bg-tile"></span>',
+          ).join("");
+          bgTiles = [...bgGrid.querySelectorAll(".bg-tile")];
+        };
+
+        buildTiles();
+        window.addEventListener("resize", buildTiles);
 
         const moveBackground = (clientX, clientY) => {
           const x = clientX / window.innerWidth - 0.5;
           const y = clientY / window.innerHeight - 0.5;
-
-          bgGrid?.style.setProperty("--grid-x", `${clientX}px`);
-          bgGrid?.style.setProperty("--grid-y", `${clientY}px`);
-          bgGrid?.style.setProperty("--grid-highlight-opacity", "0.55");
 
           anime.remove(bgGlow);
           anime({
@@ -671,6 +660,28 @@
             duration: 700,
             easing: "easeOutQuad",
           });
+
+          bgTiles.forEach((tile) => {
+            const rect = tile.getBoundingClientRect();
+            const tx = rect.left + rect.width / 2;
+            const ty = rect.top + rect.height / 2;
+            const dx = clientX - tx;
+            const dy = clientY - ty;
+            const distance = Math.hypot(dx, dy);
+            const force = Math.max(0, 1 - distance / 210);
+
+            anime.remove(tile);
+            anime({
+              targets: tile,
+              rotateX: dy * -0.08 * force,
+              rotateY: dx * 0.08 * force,
+              translateZ: 24 * force,
+              opacity: 0.5 + 0.45 * force,
+              filter: `drop-shadow(0 ${10 * force}px ${14 * force}px rgba(17, 24, 39, ${0.16 * force}))`,
+              duration: 360,
+              easing: "easeOutCubic",
+            });
+          });
         };
 
         window.addEventListener("mousemove", (e) => {
@@ -678,13 +689,21 @@
         });
 
         window.addEventListener("mouseleave", () => {
-          bgGrid?.style.setProperty("--grid-highlight-opacity", "0");
-
           anime({
             targets: bgGlow,
             translateX: 0,
             translateY: 0,
             duration: 900,
+            easing: "easeOutExpo",
+          });
+          anime({
+            targets: bgTiles,
+            rotateX: 0,
+            rotateY: 0,
+            translateZ: 0,
+            opacity: 1,
+            filter: "drop-shadow(0 0 0 rgba(17, 24, 39, 0))",
+            duration: 650,
             easing: "easeOutExpo",
           });
         });
@@ -722,32 +741,6 @@
             });
           });
         });
-
-        /* ── logo hover tilt ── */
-        const scene = document.querySelector(".scene");
-        if (scene) {
-          scene.addEventListener("mousemove", (e) => {
-            const rect = scene.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            anime({
-              targets: ".logo",
-              rotateX: y * 10,
-              rotateY: x * 10,
-              duration: 400,
-              easing: "easeOutCubic",
-            });
-          });
-          scene.addEventListener("mouseleave", () => {
-            anime({
-              targets: ".logo",
-              rotateX: 0,
-              rotateY: 0,
-              duration: 600,
-              easing: "easeOutElastic(1, .5)",
-            });
-          });
-        }
       })();
     </script>
   </body>
