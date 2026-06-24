@@ -27,18 +27,7 @@
           BlinkMacSystemFont,
           "Segoe UI",
           sans-serif;
-        background:
-          radial-gradient(
-            circle at 15% 10%,
-            rgba(174, 254, 34, 0.1),
-            transparent 30%
-          ),
-          radial-gradient(
-            circle at 85% 25%,
-            rgba(11, 133, 173, 0.12),
-            transparent 34%
-          ),
-          linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
         color: #1f2937;
         min-height: 100vh;
         display: flex;
@@ -46,14 +35,150 @@
         justify-content: center;
         overflow-x: hidden;
         padding: 48px 24px;
+        position: relative;
+        isolation: isolate;
+      }
+
+      .bg-stage {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .bg-glow,
+      .bg-orb,
+      .bg-grid {
+        position: absolute;
+        will-change: transform;
+      }
+
+      .bg-glow {
+        inset: -12%;
+        background:
+          radial-gradient(
+            circle at center,
+            rgba(255, 255, 255, 0.92),
+            transparent 32%
+          ),
+          radial-gradient(
+            circle at center,
+            rgba(174, 254, 34, 0.14),
+            transparent 48%
+          ),
+          radial-gradient(
+            circle at center,
+            rgba(11, 133, 173, 0.12),
+            transparent 60%
+          );
+        filter: blur(20px);
+        opacity: 0.95;
+      }
+
+      .bg-orb {
+        border-radius: 999px;
+        filter: blur(22px);
+        opacity: 0.5;
+      }
+
+      .bg-orb.orb-one {
+        top: 10%;
+        left: 8%;
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(174, 254, 34, 0.34),
+          rgba(174, 254, 34, 0)
+        );
+      }
+
+      .bg-orb.orb-two {
+        top: 14%;
+        right: 10%;
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(
+          circle at 40% 40%,
+          rgba(11, 133, 173, 0.25),
+          rgba(11, 133, 173, 0)
+        );
+      }
+
+      .bg-orb.orb-three {
+        bottom: 6%;
+        left: 50%;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(6, 28, 66, 0.12),
+          rgba(6, 28, 66, 0)
+        );
+        transform: translateX(-50%);
+      }
+
+      .bg-grid {
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(6, 28, 66, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(6, 28, 66, 0.1) 1px, transparent 1px);
+        background-size: 56px 56px;
+        opacity: 0.48;
+        --grid-highlight-opacity: 0;
+      }
+
+      .bg-grid::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.14) 0,
+            rgba(255, 255, 255, 0.08) 16px,
+            rgba(6, 28, 66, 0.02) 16px,
+            rgba(6, 28, 66, 0.02) 56px
+          ),
+          linear-gradient(
+            315deg,
+            rgba(6, 28, 66, 0.08) 0,
+            rgba(6, 28, 66, 0.04) 14px,
+            rgba(255, 255, 255, 0) 14px,
+            rgba(255, 255, 255, 0) 56px
+          );
+        background-size: 56px 56px;
+        opacity: 0.5;
+        mix-blend-mode: multiply;
+      }
+
+      .bg-grid::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(17, 24, 39, 0.42) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(17, 24, 39, 0.42) 1px, transparent 1px);
+        background-size: 56px 56px;
+        opacity: var(--grid-highlight-opacity);
+        filter: drop-shadow(0 0 4px rgba(17, 24, 39, 0.08));
+        mask-image: radial-gradient(
+          circle 168px at var(--grid-x, 50vw) var(--grid-y, 50vh),
+          rgba(0, 0, 0, 1) 0%,
+          rgba(0, 0, 0, 0.9) 40%,
+          transparent 100%
+        );
+        transition: opacity 0.25s ease;
       }
 
       .demo-wrapper {
+        position: relative;
+        z-index: 1;
         width: 100%;
         max-width: 720px;
         text-align: center;
         padding: 24px 32px;
-        animation: content-reveal 0.8s ease-out both;
       }
 
       .badge {
@@ -91,34 +216,6 @@
         font-size: 16px;
         line-height: 1.7;
         margin-bottom: 14px;
-      }
-
-      .info-box {
-        margin: 28px 0;
-        padding: 20px;
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.62);
-        box-shadow: 0 14px 40px rgba(15, 23, 42, 0.07);
-        backdrop-filter: blur(12px);
-        text-align: left;
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-
-      .info-box:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 48px rgba(15, 23, 42, 0.11);
-      }
-
-      .info-box p {
-        margin-bottom: 8px;
-        font-size: 15px;
-        color: #374151;
-      }
-
-      .info-box p:last-child {
-        margin-bottom: 0;
       }
 
       .btn-group {
@@ -169,17 +266,6 @@
         font-size: 13px;
       }
 
-      @keyframes content-reveal {
-        from {
-          opacity: 0;
-          transform: translateY(18px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
       @media (max-width: 600px) {
         body {
           padding: 16px;
@@ -216,7 +302,7 @@
         width: 82%;
         overflow: visible;
         filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.42));
-        animation: float 4s ease-in-out 2s infinite;
+        transform-style: preserve-3d;
       }
 
       .ring-outer,
@@ -237,16 +323,16 @@
         animation: inner-cycle 2.7s ease-in-out infinite;
       }
 
-        .bolt-shadow {
-          opacity: 0;
-          transform-origin: center bottom;
-          animation: shadow-cycle 2.7s linear infinite;
-        }
+      .bolt-shadow {
+        opacity: 0;
+        transform-origin: center bottom;
+        animation: shadow-cycle 2.7s linear infinite;
+      }
 
-        .bolt-main {
-          opacity: 0;
-          transform-origin: center bottom;
-          animation: main-cycle 2.7s linear infinite;
+      .bolt-main {
+        opacity: 0;
+        transform-origin: center bottom;
+        animation: main-cycle 2.7s linear infinite;
       }
 
       .speed-line {
@@ -264,35 +350,35 @@
         animation-delay: 0.1s;
       }
 
-        .speed-line.third {
-          stroke-width: 0.9;
-          stroke-dasharray: 13;
-          animation-delay: 0.16s;
-        }
+      .speed-line.third {
+        stroke-width: 0.9;
+        stroke-dasharray: 13;
+        animation-delay: 0.16s;
+      }
 
-        .electric-arc {
-          fill: none;
-          stroke: #d9ff72;
-          stroke-width: 2.2;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-          stroke-dasharray: 28;
-          stroke-dashoffset: 28;
-          opacity: 0;
-          filter: url(#electric-glow);
-          animation: electric-flash 2.7s linear infinite;
-        }
+      .electric-arc {
+        fill: none;
+        stroke: #d9ff72;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 28;
+        stroke-dashoffset: 28;
+        opacity: 0;
+        filter: url(#electric-glow);
+        animation: electric-flash 2.7s linear infinite;
+      }
 
-        .electric-arc.arc-two {
-          stroke-width: 1.8;
-          animation-delay: 0.05s;
-        }
+      .electric-arc.arc-two {
+        stroke-width: 1.8;
+        animation-delay: 0.05s;
+      }
 
-        .electric-arc.arc-three {
-          stroke: #ffffff;
-          stroke-width: 1.4;
-          animation-delay: 0.1s;
-        }
+      .electric-arc.arc-three {
+        stroke: #ffffff;
+        stroke-width: 1.4;
+        animation-delay: 0.1s;
+      }
 
       @keyframes inner-cycle {
         0% {
@@ -303,13 +389,13 @@
           opacity: 1;
           transform: scale(1.08) rotate(2deg);
         }
-          14%,
-          91% {
-            opacity: 1;
-            transform: scale(1) rotate(0);
-          }
-          98%,
-          100% {
+        14%,
+        91% {
+          opacity: 1;
+          transform: scale(1) rotate(0);
+        }
+        98%,
+        100% {
           opacity: 0;
           transform: scale(0.85);
         }
@@ -325,67 +411,67 @@
           opacity: 1;
           transform: scale(1.08) rotate(2deg);
         }
-          25%,
-          91% {
-            opacity: 1;
-            transform: scale(1) rotate(0);
-          }
-          98%,
-          100% {
+        25%,
+        91% {
+          opacity: 1;
+          transform: scale(1) rotate(0);
+        }
+        98%,
+        100% {
           opacity: 0;
           transform: scale(0.85);
         }
       }
 
       @keyframes shadow-cycle {
-          0%,
-          27% {
-            opacity: 0;
-            transform: translate(72px, -88px) scale(0.38, 0.72);
-          }
+        0%,
+        27% {
+          opacity: 0;
+          transform: translate(72px, -88px) scale(0.38, 0.72);
+        }
         33% {
           opacity: 1;
           transform: translate(-2px, 3px) scale(1.03);
         }
-          36%,
-          88% {
-            opacity: 1;
-            transform: translate(0) scale(1);
-          }
-          98%,
-          100% {
+        36%,
+        88% {
+          opacity: 1;
+          transform: translate(0) scale(1);
+        }
+        98%,
+        100% {
           opacity: 0;
           transform: translate(-65px, 76px) scale(0.82);
         }
       }
 
       @keyframes main-cycle {
-          0%,
-          30% {
-            opacity: 0;
-            transform: translate(72px, -88px) scale(0.38, 0.72);
-            filter: none;
+        0%,
+        30% {
+          opacity: 0;
+          transform: translate(72px, -88px) scale(0.38, 0.72);
+          filter: none;
         }
         36% {
           opacity: 1;
           transform: translate(-2px, 3px) scale(1.03);
           filter: drop-shadow(0 0 9px rgba(190, 255, 32, 0.95));
         }
-          39%,
-          90% {
-            opacity: 1;
-            transform: translate(0) scale(1);
-            filter: none;
-          }
-          98%,
-          100% {
+        39%,
+        90% {
+          opacity: 1;
+          transform: translate(0) scale(1);
+          filter: none;
+        }
+        98%,
+        100% {
           opacity: 0;
           transform: translate(-65px, 76px) scale(0.82);
           filter: none;
         }
       }
 
-        @keyframes speed-trail {
+      @keyframes speed-trail {
         0%,
         25% {
           opacity: 0;
@@ -427,16 +513,6 @@
         }
       }
 
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-9px);
-        }
-      }
-
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -446,8 +522,17 @@
         }
       }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
   </head>
   <body>
+    <div class="bg-stage" aria-hidden="true">
+      <div class="bg-glow"></div>
+      <div class="bg-orb orb-one"></div>
+      <div class="bg-orb orb-two"></div>
+      <div class="bg-orb orb-three"></div>
+      <div class="bg-grid"></div>
+    </div>
+
     <main class="demo-wrapper">
       <div class="scene">
         <svg
@@ -493,7 +578,13 @@
               <stop offset=".48" stop-color="#adff1d" />
               <stop offset="1" stop-color="#59cf2e" />
             </linearGradient>
-            <filter id="electric-glow" x="-100%" y="-100%" width="300%" height="300%">
+            <filter
+              id="electric-glow"
+              x="-100%"
+              y="-100%"
+              width="300%"
+              height="300%"
+            >
               <feGaussianBlur stdDeviation="3" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
@@ -526,7 +617,10 @@
               d="m98.64982 56.209572 34.39583-8.466667-58.20833 92.604165Z"
             />
             <path class="electric-arc" d="m94 59-10 9 5 8-10 10 5 8-10 12" />
-            <path class="electric-arc arc-two" d="m128 54 9 9-7 8 6 9-9 8 4 10" />
+            <path
+              class="electric-arc arc-two"
+              d="m128 54 9 9-7 8 6 9-9 8 4 10"
+            />
             <path class="electric-arc arc-three" d="m87 103-9 7 5 7-10 9" />
           </g>
         </svg>
@@ -546,12 +640,6 @@
         bersifat sementara sebelum website resmi dipublikasikan.
       </p>
 
-      <div class="info-box">
-        <p><strong>Status:</strong> Website demo / preview customer</p>
-        <p><strong>Developer:</strong> Velocity Developer</p>
-        <p><strong>Website Resmi:</strong> velocitydeveloper.com</p>
-      </div>
-
       <div class="btn-group">
         <a
           href="https://velocitydeveloper.com"
@@ -561,12 +649,208 @@
         >
           Kunjungi Website Resmi
         </a>
-
       </div>
 
       <div class="footer-text">
         © Velocity Developer. Halaman ini hanya digunakan untuk kebutuhan demo.
       </div>
     </main>
+
+    <script>
+      (function () {
+        const prefersReduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (prefersReduced) return;
+
+        /* ── staggered entrance ── */
+        const targets = [
+          document.querySelector(".scene"),
+          document.querySelector(".badge"),
+          document.querySelector("h1"),
+          ...document.querySelectorAll(".demo-wrapper > p"),
+          document.querySelector(".btn-group"),
+          document.querySelector(".footer-text"),
+        ];
+
+        anime({
+          targets,
+          translateY: [28, 0],
+          opacity: [0, 1],
+          duration: 700,
+          delay: anime.stagger(90),
+          easing: "easeOutCubic",
+          begin() {
+            targets.forEach((el) => {
+              if (el) el.style.opacity = "0";
+            });
+          },
+        });
+
+        /* ── logo gentle float ── */
+        const logo = document.querySelector(".logo");
+        if (logo) {
+          anime({
+            targets: logo,
+            duration: 3200,
+            direction: "alternate",
+            loop: true,
+            easing: "easeInOutSine",
+          });
+        }
+
+        const bgGlow = document.querySelector(".bg-glow");
+        const bgGrid = document.querySelector(".bg-grid");
+        const orbOne = document.querySelector(".orb-one");
+        const orbTwo = document.querySelector(".orb-two");
+        const orbThree = document.querySelector(".orb-three");
+
+        anime({
+          targets: [orbOne, orbTwo, orbThree],
+          scale: [0.98, 1.03],
+          duration: 3600,
+          delay: anime.stagger(220),
+          direction: "alternate",
+          loop: true,
+          easing: "easeInOutSine",
+        });
+
+        const moveBackground = (clientX, clientY) => {
+          const x = clientX / window.innerWidth - 0.5;
+          const y = clientY / window.innerHeight - 0.5;
+
+          bgGrid?.style.setProperty("--grid-x", `${clientX}px`);
+          bgGrid?.style.setProperty("--grid-y", `${clientY}px`);
+          bgGrid?.style.setProperty("--grid-highlight-opacity", "0.55");
+
+          anime.remove([bgGlow, orbOne, orbTwo, orbThree]);
+          anime({
+            targets: bgGlow,
+            translateX: x * 32,
+            translateY: y * 32,
+            duration: 700,
+            easing: "easeOutQuad",
+          });
+          anime({
+            targets: orbOne,
+            translateX: x * 26,
+            translateY: y * 20,
+            duration: 850,
+            easing: "easeOutQuad",
+          });
+          anime({
+            targets: orbTwo,
+            translateX: x * -34,
+            translateY: y * -24,
+            duration: 950,
+            easing: "easeOutQuad",
+          });
+          anime({
+            targets: orbThree,
+            translateX: -50 + x * 18,
+            translateY: y * 26,
+            duration: 1000,
+            easing: "easeOutQuad",
+          });
+        };
+
+        window.addEventListener("mousemove", (e) => {
+          moveBackground(e.clientX, e.clientY);
+        });
+
+        window.addEventListener("mouseleave", () => {
+          bgGrid?.style.setProperty("--grid-highlight-opacity", "0");
+
+          anime({
+            targets: bgGlow,
+            translateX: 0,
+            translateY: 0,
+            duration: 900,
+            easing: "easeOutExpo",
+          });
+          anime({
+            targets: orbOne,
+            translateX: 0,
+            translateY: 0,
+            duration: 900,
+            easing: "easeOutExpo",
+          });
+          anime({
+            targets: orbTwo,
+            translateX: 0,
+            translateY: 0,
+            duration: 1000,
+            easing: "easeOutExpo",
+          });
+          anime({
+            targets: orbThree,
+            translateX: -50,
+            translateY: 0,
+            duration: 1050,
+            easing: "easeOutExpo",
+          });
+        });
+
+        /* ── badge pulse ── */
+        const badge = document.querySelector(".badge");
+        if (badge) {
+          anime({
+            targets: badge,
+            scale: [1, 1.04],
+            duration: 1800,
+            direction: "alternate",
+            loop: true,
+            easing: "easeInOutSine",
+          });
+        }
+
+        /* ── button hover ── */
+        const btns = document.querySelectorAll(".btn");
+        btns.forEach((btn) => {
+          btn.addEventListener("mouseenter", () => {
+            anime({
+              targets: btn,
+              scale: 1.04,
+              duration: 280,
+              easing: "easeOutCubic",
+            });
+          });
+          btn.addEventListener("mouseleave", () => {
+            anime({
+              targets: btn,
+              scale: 1,
+              duration: 280,
+              easing: "easeOutCubic",
+            });
+          });
+        });
+
+        /* ── logo hover tilt ── */
+        const scene = document.querySelector(".scene");
+        if (scene) {
+          scene.addEventListener("mousemove", (e) => {
+            const rect = scene.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            anime({
+              targets: ".logo",
+              rotateX: y * 10,
+              rotateY: x * 10,
+              duration: 400,
+              easing: "easeOutCubic",
+            });
+          });
+          scene.addEventListener("mouseleave", () => {
+            anime({
+              targets: ".logo",
+              rotateX: 0,
+              rotateY: 0,
+              duration: 600,
+              easing: "easeOutElastic(1, .5)",
+            });
+          });
+        }
+      })();
+    </script>
   </body>
 </html>
